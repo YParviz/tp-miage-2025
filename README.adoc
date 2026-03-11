@@ -79,8 +79,8 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 * `docker run` : Crée et démarre un nouveau conteneur.
 * `-it` : Mode interactif avec terminal (permet de voir les logs de la base en direct).
 * `-e POSTGRES_PASSWORD=password` : Définit une variable d'environnement pour le mot de passe de la base.
-* `-p 5432:5432` : Redirige le port 5432 de ton PC (ou VM) vers le port 5432 du conteneur.
-* `postgres` : Nom de l'image officielle à télécharger sur le Docker Hub.
+* `-p 5432:5432` : Redirige le port 5432 du PC vers le port 5432 du conteneur.
+* `postgres` : Nom de l'image.
 
 * Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
