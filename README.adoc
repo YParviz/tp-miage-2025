@@ -58,9 +58,15 @@ TIP: [Rappel Git] Trois dépôts sont ici utilisés : le dépot Github de l'ense
 
 *Le code est-il structuré en couches ? Quel problèmes ce code peut-il poser ?*
 
+**Réponse :** Non, le code n'est pas structuré en couches, tout se trouve dans le controller ToDoListController. C'est un code monolithique, qui pose donc des problèmes pour maintenir l'application et la tester, car si on change la base de données ou la logique métier, on est obligé de modifier le code.
+
 *Où se trouve le code métier (voir la règle de gestion RG 1) ?*
 
+**Réponse :** Le code métier se trouve dans la méthode `finalContent()` du `TodoListController`. Elle gère la règle des 24h, qui indique que si un item a plus de 24h, on ajoute dans le contenu une note "[LATE!]".
+
 *Cette règle est-elle facilement testable par un test unitaire ?*
+
+**Réponse :** Non, elle n'est pas facile à tester car elle est private et enfermée dans un Controller. Pour la tester, il faudrait démarrer tout un contexte Web, ce qui est beaucoup plus lent qu'un test unitaire alors que c'est juste pour un simple calcul.
 
 * Lancer une base PostgreSQL en Docker dans un terminal (on lance ici la base en mode interactif pour visualiser son activité. Pour la lancer en tâche de fond, remplacer les options `it` par `d` comme 'daemon'):
 ```bash
@@ -68,9 +74,19 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 ```
 *Expliquer cette ligne de commande (y compris les options utilisées)*
 
-* Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
+**Réponse :**
+
+* `docker run` : Crée et démarre un nouveau conteneur.
+* `-it` : Mode interactif avec terminal (permet de voir les logs de la base en direct).
+* `-e POSTGRES_PASSWORD=password` : Définit une variable d'environnement pour le mot de passe de la base.
+* `-p 5432:5432` : Redirige le port 5432 du PC vers le port 5432 du conteneur.
+* `postgres` : Nom de l'image.
+
+Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
+
+**Réponse :** Il est `null` parce que Spring ne sait pas quel constructeur utiliser. La meilleure façon est l'injection par constructeur, car cela garantit que l'objet est toujours créé avec ses dépendances et cela facilite les tests unitaires.
 
 * Modifier le code en conséquence.
 
@@ -112,6 +128,15 @@ Source : http://leanpub.com/get-your-hands-dirty-on-clean-architecture[Tom Hombe
   - la couche `domain` qui contient les entités (au sens DDD, pas au sens JPA). En général des classes complexes (méthodes riches, relations entre les entités)
 
 *Rappeler en quelques lignes les grands principes de l'architecture hexagonale.*
+
+**Réponse :** L'architecture hexagonale a pour but d'isoler le code métier du reste de l'application (base de données, interface Web, framework).
+
+Voici les 4 grands principes :
+
+* Le coeur métier isolé : contient toute la logique et les règles de l'application. Il est totalement pur et indépendant des technologies externes (pas de framework, pas de base de données, pas de HTTP).
+* Les ports (contrats) : Ce sont de simples interfaces définies par le domaine. Elles dictent comment communiquer avec lui (ce qu'il offre ou ce dont il a besoin) sans se soucier de la réalisation technique.
+* Les adaptateurs (infrastructure) : Situés à l'extérieur, ils traduisent les échanges entre le monde extérieur et le domaine. Les adaptateurs primaires (ex: Controller Web) donnent des ordres au domaine, tandis que les adaptateurs secondaires (ex: un Repository) exécutent les demandes du domaine.
+* La règle de dépendance vers l'intérieur : L'extérieur (l'infrastructure) dépend toujours de l'intérieur (le domaine), mais l'intérieur ignore totalement l'existence de l'extérieur.
 
 Compléter ce code avec une fonctionnalité de création de `TodoItem`  persisté en base et appelé depuis un endpoint REST `POST /todos` qui :
 
