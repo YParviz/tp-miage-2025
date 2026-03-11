@@ -86,6 +86,8 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
 
+**Réponse :** Il est `null` parce que Spring ne sait pas quel constructeur utiliser. La meilleure façon est l'injection par constructeur, car cela garantit que l'objet est toujours créé avec ses dépendances et cela facilite les tests unitaires.
+
 * Modifier le code en conséquence.
 
 * Tester vos endpoints avec un client REST.
