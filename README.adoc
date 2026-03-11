@@ -154,6 +154,12 @@ _Temps estimé : 20 mins_
 
 *Quels types de tests devra-t-on écrire pour les adaptateurs ?* 
 
+**Réponse :** Comme les adaptateurs ont pour rôle de communiquer avec le monde extérieur (le réseau, la base de données, le framework Spring), de simples tests unitaires n'ont pas de sens, il faut tester l'intégration avec ces outils. 
+
+ - Pour les adaptateurs primaires (Web / Controllers), on écrit des tests d'intégration Web, on "mock" (simule) le domaine, et on vérifie que le contrôleur gère bien les requêtes HTTP, les codes de retour, et la conversion du JSON.
+
+ - Pour les adaptateurs secondaires (Persistance / Repositories), on écrit des tests d'intégration de base de données et on vérifie que le mapping fonctionne correctement et que les requêtes SQL s'exécutent bien sur une vraie base de données.
+
 *S'il vous reste du temps, écrire quelques-uns de ces types de test.*
 
 [TIP]
