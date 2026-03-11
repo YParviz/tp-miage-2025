@@ -82,7 +82,7 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 * `-p 5432:5432` : Redirige le port 5432 du PC vers le port 5432 du conteneur.
 * `postgres` : Nom de l'image.
 
-* Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
+Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
 
