@@ -66,6 +66,8 @@ Le code métier se trouve dans la méthode `finalContent()` du `TodoListControll
 
 *Cette règle est-elle facilement testable par un test unitaire ?*
 
+Non, elle n'est pas facile à tester car elle est private et enfermée dans un Controller. Pour la tester, il faudrait démarrer tout un contexte Web, ce qui est beaucoup plus lent qu'un test unitaire alors que c'est juste pour un simple calcul.
+
 * Lancer une base PostgreSQL en Docker dans un terminal (on lance ici la base en mode interactif pour visualiser son activité. Pour la lancer en tâche de fond, remplacer les options `it` par `d` comme 'daemon'):
 ```bash
 docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
