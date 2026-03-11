@@ -129,6 +129,14 @@ Source : http://leanpub.com/get-your-hands-dirty-on-clean-architecture[Tom Hombe
 
 *Rappeler en quelques lignes les grands principes de l'architecture hexagonale.*
 
+**Réponse :** L'architecture hexagonale a pour but d'isoler le code métier du reste de l'application (base de données, interface Web, framework).
+
+Voici les 4 grands principes :
+ - Le coeur métier isolé : contient toute la logique et les règles de l'application. Il est totalement pur et indépendant des technologies externes (pas de framework, pas de base de données, pas de HTTP).
+ - Les ports (contrats) : Ce sont de simples interfaces définies par le domaine. Elles dictent comment communiquer avec lui (ce qu'il offre ou ce dont il a besoin) sans se soucier de la réalisation technique.
+ - Les adaptateurs (infrastructure) : Situés à l'extérieur, ils traduisent les échanges entre le monde extérieur et le domaine. Les adaptateurs primaires (ex: Controller Web) donnent des ordres au domaine, tandis que les adaptateurs secondaires (ex: un Repository) exécutent les demandes du domaine.
+ - La règle de dépendance vers l'intérieur : L'extérieur (l'infrastructure) dépend toujours de l'intérieur (le domaine), mais l'intérieur ignore totalement l'existence de l'extérieur.
+
 Compléter ce code avec une fonctionnalité de création de `TodoItem`  persisté en base et appelé depuis un endpoint REST `POST /todos` qui :
 
 * prend un `TodoItem` au format JSON dans le body (voir exemple de contenu plus haut);
